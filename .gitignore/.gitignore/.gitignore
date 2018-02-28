@@ -1,0 +1,155 @@
+Lugar.java
+
+package org.example.mislugares;
+public class Lugar {
+    private String nombre;
+    private String direccion;
+    private GeoPunto posicion;
+    private String foto;
+    private int telefono;
+    private String url;
+    private String comentario;
+    private long fecha;
+    private float valoracion;
+    public Lugar(String nombre, String direccion, double longitud,
+                 double latitud, int telefono, String url, String comentario,
+                 int valoracion) {
+        fecha = System.currentTimeMillis();
+        posicion = new GeoPunto(longitud, latitud);
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.url = url;
+        this.comentario = comentario;
+        this.valoracion = valoracion;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public GeoPunto getPosicion() {
+        return posicion;
+    }
+
+    public void setPosicion(GeoPunto posicion) {
+        this.posicion = posicion;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public int getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
+
+    public long getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(long fecha) {
+        this.fecha = fecha;
+    }
+
+    public float getValoracion() {
+        return valoracion;
+    }
+
+    public void setValoracion(float valoracion) {
+        this.valoracion = valoracion;
+    }
+}
+
+Principal.java
+
+package org.example.mislugares;
+
+class Principal {
+    public static void main(String[] main) {
+        Lugar lugar = new Lugar("Escuela Politécnica Superior de Gandía",
+                "C/ Paranimf, 1 46730 Gandia (SPAIN)", -0.166093, 38.995656,
+                962849300, "http://www.epsg.upv.es",
+                "Uno de los mejores lugares para formarse.", 3);
+        System.out.println("Lugar " + lugar.toString());
+    }
+}
+
+GeoPunto.java
+
+package org.example.mislugares;
+
+public class GeoPunto {
+    private double longitud, latitud;
+    public GeoPunto(double longitud, double latitud) {
+        this.longitud= longitud;
+        this.latitud= latitud;
+    }
+    public String toString() {
+        return new String("longitud:" + longitud + ", latitud:"+ latitud);
+    }
+    public double distancia(GeoPunto punto) {
+        final double RADIO_TIERRA = 6371000; // en metros
+        double dLat = Math.toRadians(latitud - punto.latitud);
+        double dLon = Math.toRadians(longitud - punto.longitud);
+        double lat1 = Math.toRadians(punto.latitud);
+        double lat2 = Math.toRadians(latitud);
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.sin(dLon/2) * Math.sin(dLon/2) *
+                        Math.cos(lat1) * Math.cos(lat2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return c * RADIO_TIERRA;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+}
